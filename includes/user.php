@@ -35,10 +35,14 @@ class User {
             }
             else{
                 set_message("Your Password is wrong!");
+                $_SESSION['username_temp'] = $_POST['username'];
+                $_SESSION['password_temp'] = $_POST['password'];
                 header("Location: login.php");
             }
         }else {
             set_message("Your Username or Password is wrong!");
+            $_SESSION['username_temp'] = $_POST['username'];
+            $_SESSION['password_temp'] = $_POST['password'];
             header("Location: login.php");
         }
 
