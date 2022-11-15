@@ -15,7 +15,7 @@
                     <label for="password">Password</label>
                     <input class="form-control" name="password" type="password" id="password" placeholder="Enter password" maxlength="30" value="">
                 </div>
-                <p class="error text-center"></p>
+                <p class="error text-center"><?php echo display_message();?></p>
 
                 <button class="btn btn-primary btn-block" type="submit" name="login">Login</button>
 <!--                <a href="" class="btn btn-success btn-block" name="register">Register</a>-->

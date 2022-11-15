@@ -40,6 +40,7 @@ print_r($_SESSION);
             <br>
 
             <a class="btn btn-primary btn-lg" href="#" role="button">Confirm</a>
+            <a href="logout.php" class="btn btn-outline-danger btn-lg" name="register" onclick="return confirm('Are you sure you want to log out?');">LogOut</a>
         </div>
 
         <br>

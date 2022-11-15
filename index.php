@@ -52,6 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <h1 class="display-4 text-center mb-3 mt-1 col-12">Order Now!</h1>
 
+
             <div class="col-3 offset-3">
                 <p class="text-center">Size</p>
 
@@ -170,7 +171,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 
-            <button class="btn btn-primary btn-block mb-4" id="submit" name="submit" type="submit" onclick="return confirm('Have you finished with your order?');">Submit</button>
+            <button class="btn btn-primary mb-4 col-9" id="submit" name="submit" type="submit" onclick="return confirm('Have you finished with your order?');">Submit</button>
+            <a href="logout.php" class="btn btn-outline-danger mb-4 col-3" name="register" onclick="return confirm('Are you sure you want to log out?');">LogOut</a>
+
 
 
         </div>
