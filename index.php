@@ -1,5 +1,11 @@
 <?php
-require_once ('includes/header.php'); ?>
+require_once ('includes/header.php');
+if(!isset($_SESSION['username'])){
+    header("Location: login.php");
+}
+
+?>
+
 
 
 <?php
