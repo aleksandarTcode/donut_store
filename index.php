@@ -12,7 +12,7 @@ if(!isset($_SESSION['username'])){
 $firstname = $lastname = $address = $zip = $payment = "";
 $firstnameErr = $lastnameErr = $addressErr = $zipErr = $sizeErr = "";
 $firstnameC = $lastnameC = $addressC = $zipC = $sizeC = 1;
-$_SESSION['firstname'] = $_SESSION['lastname'] = $_SESSION['address'] = $_SESSION['zip'] = $_SESSION['paymentMethod'] = $_SESSION['size'] = $_SESSION['extras'] = '';
+$_SESSION['address'] = $_SESSION['zip'] = $_SESSION['paymentMethod'] = $_SESSION['size'] = $_SESSION['extras'] = '';
 
 
 
@@ -31,10 +31,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
 
-//        print_r($_SESSION);
+
 
     if($firstnameC && $lastnameC && $addressC && $zipC ==1){
-            header("Location: order.php");
+            header("Location: make_order.php");
     }
 
 
@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 ?>
 <div class="container w-50" id="container">
-
+    <?php   print_r($_SESSION); ?>
 
     <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post">
 

@@ -1,5 +1,17 @@
 <?php
 require_once ('includes/header.php');
+if(!isset($_SESSION['username'])){
+    header("Location: login.php");
+}
+
+//unset visits so buyer can make order again after previous order
+unset($_SESSION["visits"]);
+
+$item = $_SESSION['item'] = $_SESSION['size'].' with '.printAllExtras();
+$buyer = $_SESSION['firstname'].' '.$_SESSION['lastname'];
+$address = $_SESSION['zip'].' '.$_SESSION['address'];
+$payment_method = $_SESSION['paymentMethod'];
+$price = $_SESSION['price'] = sumPrice();
 
 print_r($_SESSION);
 
@@ -28,19 +40,19 @@ print_r($_SESSION);
                 <tbody>
                 <tr>
                     <th scope="row">1</th>
-                    <td><?php echo $_SESSION['size'].' with '.printAllExtras(); ?></td>
-                    <td><?php echo $_SESSION['firstname'].' '.$_SESSION['lastname']; ?></td>
-                    <td><?php echo $_SESSION['zip'].' '.$_SESSION['address']; ?></td>
-                    <td><?php echo $_SESSION['paymentMethod']; ?></td>
-                    <td><?php echo "$".sumPrice() ?></td>
+                    <td><?php echo $item; ?></td>
+                    <td><?php echo $buyer; ?></td>
+                    <td><?php echo $address; ?></td>
+                    <td><?php echo $payment_method; ?></td>
+                    <td><?php echo "$".$price ?></td>
                 </tr>
                 </tbody>
             </table>
 
             <br>
 
-            <a class="btn btn-primary btn-lg" href="#" role="button">Confirm</a>
-            <a href="logout.php" class="btn btn-outline-danger btn-lg" name="register" onclick="return confirm('Are you sure you want to log out?');">LogOut</a>
+            <a class="btn btn-success btn-lg" href="confirm.php" role="button">Confirm</a>
+            <a href="logout.php" class="btn btn-outline-danger btn-lg" onclick="return confirm('Are you sure you want to log out?');">LogOut</a>
         </div>
 
         <br>

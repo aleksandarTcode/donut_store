@@ -7,8 +7,7 @@ if(isset($_SESSION['username'])&&$_SESSION['role']=='buyer'){
     header("Location: orders_list.php");}
 
 //$_SESSION['username_temp'] = $_SESSION['password_temp'] = "";
-
-print_r($_SESSION);
+//print_r($_SESSION);
 ?>
 
 <?php
