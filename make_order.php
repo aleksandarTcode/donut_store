@@ -13,7 +13,7 @@ $address = $_SESSION['zip'].' '.$_SESSION['address'];
 $payment_method = $_SESSION['paymentMethod'];
 $price = $_SESSION['price'] = sumPrice();
 
-print_r($_SESSION);
+//print_r($_SESSION);
 
 ?>
 

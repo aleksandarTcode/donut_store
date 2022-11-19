@@ -1,6 +1,6 @@
 <?php
 require_once ('includes/header.php');
-if(!isset($_SESSION['username'])){
+if(!isset($_SESSION['username'])||$_SESSION['role']!=='buyer'){
     header("Location: login.php");
 }
 
@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 ?>
 <div class="container w-50" id="container">
-    <?php   print_r($_SESSION); ?>
+<!--    --><?php //  print_r($_SESSION); ?>
 
     <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post">
 
