@@ -7,23 +7,45 @@ function test_input($data) {
     return $data;
 }
 
+//function text_input_field_check($data,$regex_pattern,$message){
+//
+//    global ${$data.'Err'};
+//    global ${$data.'C'};
+//    if (empty($_POST[$data])) {
+//        ${$data.'Err'}= "This field is required";
+//        $$data = "";
+//        ${$data.'C'} = 0;
+//    } else {
+//        $$data = test_input($_POST[$data]);
+//        // check if name only contains letters and whitespace
+//        if (!preg_match($regex_pattern, $$data)) {
+//            ${$data.'Err'} = $message;
+//            ${$data.'C'} = 0;
+//        }
+//    }
+//    $_SESSION[$data] = $$data;
+//
+//}
+
+
 function text_input_field_check($data,$regex_pattern,$message){
 
-    global ${$data.'Err'};
-    global ${$data.'C'};
     if (empty($_POST[$data])) {
-        ${$data.'Err'}= "This field is required";
-        $$data = "";
+        global ${$data.'Err'}; // makes name for error variable, ex. if $input is first_name, it is first_nameErr
+        ${$data.'Err'} = "Field is required";
         ${$data.'C'} = 0;
-    } else {
-        $$data = test_input($_POST[$data]);
-        // check if name only contains letters and whitespace
-        if (!preg_match($regex_pattern, $$data)) {
-            ${$data.'Err'} = $message;
-            ${$data.'C'} = 0;
-        }
+    }  // check regular expression for input
+    elseif (!preg_match($regex_pattern, $_POST[$data])) {
+        global ${$data.'Err'};
+        ${$data.'Err'} = $message;
+        ${$data.'C'} = 0;
+        $_SESSION[$data] = $_POST[$data]; // makes session for form output when input is wrong
     }
-    $_SESSION[$data] = $$data;
+    else {
+        global $$data; // // makes name for variable
+        $$data = test_input($_POST[$data]);
+        $_SESSION[$data] = $$data;
+    }
 }
 
 function zip_check(){
@@ -118,6 +140,8 @@ function display_message(){
         unset($_SESSION['message']);
     }
 }
+
+
 
 
 

@@ -20,7 +20,7 @@
                 <p class="error text-center"><?php echo display_message();?></p>
 
                 <button class="btn btn-primary btn-block" type="submit" name="login">Login</button>
-<!--                <a href="" class="btn btn-success btn-block" name="register">Register</a>-->
+                <a href="register.php" class="btn btn-success btn-block" name="register">Register</a>
 
             </form>
         </div>

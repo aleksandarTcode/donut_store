@@ -25,6 +25,7 @@ public function __get($name)
 }
 
     public function login_user(){
+
         $this->username = test_input($_POST['username']);
         $this->password = test_input($_POST['password']);
 
