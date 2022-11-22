@@ -1,5 +1,7 @@
 <?php
 require_once ("includes/header.php");
+//if(isset($_SESSION['username'])){header("Location: login.php");}
+
 ?>
 <?php
 $first_nameErr = $last_nameErr = $usernameErr = $emailErr =  $passwordErr = $confirm_passwordErr = $ageErr = "";
@@ -36,6 +38,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $confirm_password = test_input($_POST["confirm_password"]);
         $_SESSION['confirm_password'] = $confirm_password;
         $hashed_password = password_hash($confirm_password, PASSWORD_DEFAULT);
+        $_SESSION['hashed_password'] = $hashed_password;
     }
 
     // Email check and set
@@ -59,11 +62,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     if($first_name && $last_name && $username && $email && $password && $confirm_password && $age){
 
-        header("Location: index.php");
+        $user = new User($database);
+        $user->add_user();
+        $usernameErr = $user->usernameErr;//print error message if username is taken
+        $emailErr = $user->emailErr;//print error message if email is taken
+
+        header("Location: thanks.php");
 
     }
 
-//    print_r($_SESSION);
+    print_r($_SESSION);
 
 
 }//if end

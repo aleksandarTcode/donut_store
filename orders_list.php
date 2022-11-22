@@ -39,7 +39,7 @@ if(isset($_GET['approve_id'])){
                 <th>Address</th>
                 <th>Payment Method</th>
                 <th>Date</th>
-                <th>Price</th>
+                <th>Price($)</th>
                 <th>Status</th>
                 <th>Change Status</th>
             </tr>
