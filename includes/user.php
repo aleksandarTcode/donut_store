@@ -2,6 +2,7 @@
 require_once("functions.php");
 class User {
     public $database;
+    public $mail;
     public $username;
     public $hashed_password;
     public $password;
@@ -57,6 +58,38 @@ class User {
                 $stmt->bindParam(':age',$_SESSION['age']);
 
                 $stmt->execute();
+
+                //sending mail to user when register
+                $this->mail->IsSMTP();
+                $this->mail->Mailer = "smtp";
+                $this->mail->SMTPDebug  = 1;
+                $this->mail->SMTPAuth   = TRUE;
+                $this->mail->SMTPSecure = "tls";
+                $this->mail->Port       = 587;
+                $this->mail->Host       = "smtp.gmail.com";
+                $this->mail->Username   = "testingtrmcic@gmail.com";
+                $this->mail->Password   = "ocphwwhfisxkjjjs";
+
+                //Recipients
+                $this->mail->setFrom('sweethouse@example.com', 'Sweethouse');
+                $this->mail->addAddress($_SESSION['email'], $_SESSION['first_name']." ".$_SESSION['last_name']);     //Add a recipient
+//                $this->mail->addAddress('ellen@example.com');               //Name is optional
+                $this->mail->addReplyTo('testingtrmcic@gmail.com', 'Aleksandar');
+//                $this->mail->addCC('cc@example.com');
+//                $this->mail->addBCC('bcc@example.com');
+
+//                //Attachments
+//                $this->mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
+//                $this->mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
+
+                //Content
+                $this->mail->isHTML(true);                                  //Set email format to HTML
+                $this->mail->Subject = 'Successful registration!';
+                $this->mail->Body    = "<h3>Dear {$_SESSION['first_name']}, thank you for registering on our store!</h3><br><p>Your <b>username</b> is: {$_SESSION['username']}</p><p>Your <b>password</b> is: {$_SESSION['password']}</p>";
+                $this->mail->AltBody = 'Thank you for registering on our store!';
+
+                $this->mail->send();
+                echo 'Message has been sent';
 
             }
 

@@ -2,6 +2,14 @@
 require_once ("includes/header.php");
 //if(isset($_SESSION['username'])){header("Location: login.php");}
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require 'vendor/autoload.php';
+
+$mail = new PHPMailer(true);
+
 ?>
 <?php
 $first_nameErr = $last_nameErr = $usernameErr = $emailErr =  $passwordErr = $confirm_passwordErr = $ageErr = "";
@@ -63,6 +71,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     if($first_name && $last_name && $username && $email && $password && $confirm_password && $age){
 
         $user = new User($database);
+        $user->mail = $mail;//set mail property in User class to Phpmailer instance
         $user->add_user();
         $usernameErr = $user->usernameErr;//print error message if username is taken
         $emailErr = $user->emailErr;//print error message if email is taken
