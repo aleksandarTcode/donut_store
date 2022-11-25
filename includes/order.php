@@ -201,8 +201,10 @@ class Order {
 
         try{
             $stmt = $this->database->conn->exec("DELETE FROM orders WHERE id = {$id}");
+            return true;
         }catch (PDOException $e){
             echo "Error: " . $e->getMessage();
+            return false;
         }
     }
 
@@ -222,6 +224,71 @@ class Order {
         $this->price = $row->price;
         $this->date = $row->date;
         $this->name = $row->name;
+
+    }
+
+    public function create_order_forApi(){
+
+        try {
+        $stmt = $this->database->conn->prepare("INSERT INTO orders (idB,item,address,payment_method,price,status) VALUES (:idB,:item,:address,:payment_method,:price,:status)");
+
+        $this->idB = test_input($this->idB);
+        $this->item = test_input($this->item);
+        $this->address = test_input($this->address);
+        $this->paymentMethod = test_input($this->paymentMethod);
+        $this->price = test_input($this->price);
+        $this->status = test_input($this->status);
+
+
+        $stmt->bindParam('idB',$this->idB);
+        $stmt->bindParam('item',$this->item);
+        $stmt->bindParam('address',$this->address);
+        $stmt->bindParam('payment_method',$this->paymentMethod);
+        $stmt->bindParam('price',$this->price);
+        $stmt->bindParam('status',$this->status);
+
+        $stmt->execute();
+        return true;
+
+          }
+            catch (PDOException $e){
+              echo "Error: ". $e->getMessage();
+              return false;
+          }
+
+
+
+    }
+
+    public function update_order_forApi(){
+        try {
+            $stmt = $this->database->conn->prepare("UPDATE orders SET idB=:idB,item=:item,address=:address,payment_method=:payment_method,price=:price,status=:status WHERE id=:id");
+
+            $this->id = test_input($this->id);
+            $this->idB = test_input($this->idB);
+            $this->item = test_input($this->item);
+            $this->address = test_input($this->address);
+            $this->paymentMethod = test_input($this->paymentMethod);
+            $this->price = test_input($this->price);
+            $this->status = test_input($this->status);
+
+            $stmt->bindParam('id',$this->id);
+            $stmt->bindParam('idB',$this->idB);
+            $stmt->bindParam('item',$this->item);
+            $stmt->bindParam('address',$this->address);
+            $stmt->bindParam('payment_method',$this->paymentMethod);
+            $stmt->bindParam('price',$this->price);
+            $stmt->bindParam('status',$this->status);
+
+            $stmt->execute();
+
+            return true;
+
+        }
+        catch (PDOException $e){
+            echo "Error: ". $e->getMessage();
+            return false;
+        }
 
     }
 
