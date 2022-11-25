@@ -30,7 +30,7 @@ if(isset($_GET['approve_id'])){
         <h1 class="display-4">All Orders!</h1>
         <hr>
         <br>
-<?php //$orders->get_all_with_pagination(); ?>
+
         <table class="table">
             <thead>
             <tr>

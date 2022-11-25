@@ -9,6 +9,10 @@ class Order {
     public $address;
     public $paymentMethod;
     public $price;
+    public $name;
+    public $status;
+    public $id;
+
 
     public function __set($name, $value)
     {
@@ -51,7 +55,7 @@ class Order {
 
     public function get_all_orders(){
 
-        $sql_query = "SELECT orders.item,orders.address,orders.payment_method,orders.price,orders.status,orders.date,CONCAT(users.firstname,' ',users.lastname) AS name FROM orders INNER JOIN users ON orders.idb=users.idb ORDER BY date DESC ;";
+        $sql_query = "SELECT orders.id,orders.item,orders.address,orders.payment_method,orders.price,orders.status,orders.date,CONCAT(users.firstname,' ',users.lastname) AS name FROM orders INNER JOIN users ON orders.idb=users.idb ORDER BY date DESC ;";
         $stmt = $this->database->conn->prepare($sql_query);
         $stmt->execute();
 
@@ -200,6 +204,25 @@ class Order {
         }catch (PDOException $e){
             echo "Error: " . $e->getMessage();
         }
+    }
+
+    public function get_single_order(){
+        $sql_query = "SELECT orders.id,orders.item,orders.address,orders.payment_method,orders.price,orders.status,orders.date,CONCAT(users.firstname,' ',users.lastname) AS name FROM orders INNER JOIN users ON orders.idb=users.idb WHERE orders.id=? ORDER BY date DESC ;";
+
+        $stmt = $this->database->conn->prepare($sql_query);
+        $stmt->bindParam(1,$this->id);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_OBJ);
+
+        $this->item = $row->item;
+        $this->address = $row->address;
+        $this->payment_method = $row->payment_method;
+        $this->status = $row->status;
+        $this->price = $row->price;
+        $this->date = $row->date;
+        $this->name = $row->name;
+
     }
 
 

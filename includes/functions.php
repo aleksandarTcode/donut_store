@@ -121,7 +121,7 @@ function printAllExtras(){
             }
         }
     }
-    else $allExtras = " nothing";
+    else $allExtras = "nothing";
     return $allExtras;
 }
 
