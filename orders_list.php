@@ -10,7 +10,7 @@ if(isset($_GET['page'])){
     $_SESSION['page'] = $_GET['page'];
 }
 
-
+// to stay on the same page when change order status
 if(isset($_GET['approve_id'])){
     $orders->change_order_status('approved',$_GET['approve_id']);
     header("Location: orders_list.php?page={$_SESSION['page']}");
