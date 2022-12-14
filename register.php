@@ -76,8 +76,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $usernameErr = $user->usernameErr;//print error message if username is taken
         $emailErr = $user->emailErr;//print error message if email is taken
 
-        header("Location: thanks.php");
-
+        if($usernameErr=='' && $emailErr==''){
+            header("Location: thanks.php");
+        }
     }
 
     print_r($_SESSION);

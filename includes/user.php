@@ -12,8 +12,8 @@ class User {
     public $age;
     public $role;
     public $role_session;
-    public $usernameErr;
-    public $emailErr;
+    public $usernameErr = "";
+    public $emailErr ="";
     public $idB;
 
     public function __construct($data_base)
