@@ -13,7 +13,7 @@ class User {
     public $role;
     public $role_session;
     public $usernameErr = "";
-    public $emailErr ="";
+    public $emailErr = "";
     public $idB;
 
     public function __construct($data_base)
