@@ -81,7 +81,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         }
     }
 
-    print_r($_SESSION);
+//    print_r($_SESSION);
 
 
 }//if end

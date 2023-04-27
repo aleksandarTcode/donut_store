@@ -7,7 +7,6 @@ if(!isset($_SESSION['username'])){
 ?>
 
 
-
 <?php
 $firstname = $lastname = $address = $zip = $payment = "";
 $firstnameErr = $lastnameErr = $addressErr = $zipErr = $sizeErr = "";

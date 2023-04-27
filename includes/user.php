@@ -67,8 +67,8 @@ class User {
                 $this->mail->SMTPSecure = "tls";
                 $this->mail->Port       = 587;
                 $this->mail->Host       = "smtp.gmail.com";
-                $this->mail->Username   = "testingtrmcic@gmail.com";
-                $this->mail->Password   = "ocphwwhfisxkjjjs";
+                $this->mail->Username   = "username";
+                $this->mail->Password   = "password";
 
                 //Recipients
                 $this->mail->setFrom('sweethouse@example.com', 'Sweethouse');
@@ -88,8 +88,12 @@ class User {
                 $this->mail->Body    = "<h3>Dear {$_SESSION['first_name']}, thank you for registering on our store!</h3><br><p>Your <b>username</b> is: {$_SESSION['username']}</p><p>Your <b>password</b> is: {$_SESSION['password']}</p>";
                 $this->mail->AltBody = 'Thank you for registering on our store!';
 
+                try {
                 $this->mail->send();
                 echo 'Message has been sent';
+                } catch (Exception $e){
+                    //
+                }
 
             }
 
