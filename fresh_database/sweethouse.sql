@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 21, 2022 at 08:02 AM
+-- Generation Time: Apr 28, 2023 at 07:14 AM
 -- Server version: 5.7.24
--- PHP Version: 7.4.12
+-- PHP Version: 8.1.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -55,7 +55,7 @@ INSERT INTO `orders` (`id`, `idB`, `item`, `address`, `payment_method`, `price`,
 (34, 8, 'small with crumbs and twix', 'nova 321556', 'card', 1.6, 'approved', '2022-11-22 10:13:51'),
 (35, 7, 'large with nutella, cherry, plazma and coconut', 'new belgrade 222', 'card', 3.4, 'unprocessed', '2022-11-23 09:18:35'),
 (44, 7, 'large with nutella', 'new address', 'card', 3, 'unprocessed', '2022-11-25 09:50:02'),
-(45, 7, 'large with nutella, plazma, coconut and twix', 'new test address', 'card', 3.3, 'unprocessed', '2022-11-30 07:34:11'),
+(45, 7, 'large with nutella, plazma, coconut and twix', 'new test address', 'card', 3.3, 'denied', '2022-11-30 07:34:11'),
 (46, 16, 'large with cherry, coconut and twix', 'nova adresa 123', 'card', 3, 'unprocessed', '2022-12-14 10:37:00');
 
 -- --------------------------------------------------------
@@ -75,22 +75,24 @@ CREATE TABLE IF NOT EXISTS `users` (
   `age` int(11) NOT NULL,
   `role` varchar(45) COLLATE utf16_unicode_ci NOT NULL DEFAULT 'buyer',
   PRIMARY KEY (`idB`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`idB`, `username`, `password`, `firstname`, `lastname`, `email`, `age`, `role`) VALUES
-(4, 'aca', '$2y$10$MHgB5oWsrtWHn5Ykfu/22.Q.n/isHvRlbemRXgGiHpEmiDk4Q1py.', 'Aleksandar', 'Trmcic', 'aleksandar.trmcic@gmail.com', 32, 'worker'),
-(7, 'jake', '$2y$10$1lftX3XoSPSPiJoBHgQtpufKZfbuBgICuAWYRv1t/LKSFXJ1AkRle', 'John', 'Johnson', 'jake@gmail.com', 25, 'buyer'),
-(8, 'jane', '$2y$10$FfMi6CyX.ztTJo5FzZdLLuKNXoMokXv/klegjxchwHG36/NvO5a.C', 'Joane', 'Williams', 'jane@gmail.com', 33, 'buyer'),
-(12, 'mike', '$2y$10$9lo27fSoTO.qcO8SP8C/Zu3.EVXPd63Vy46RmHym89PkKduGcmF5.', 'Mark', 'James', 'mike@gmail.com', 44, 'buyer'),
-(13, 'mon', '$2y$10$9KEzCuo5QEoUtUGsrkjLc.IwssThjS6iWHT23dISG4ti4Oto1Ev9K', 'Monica', 'Smith', 'a_trmcic@hotmail.com', 29, 'buyer'),
-(14, 'aco', '$2y$10$gZkUnpgMXfQOhlukZfzHD.wwyiyf3reJ78txzrQlO260HrjT/jz2u', 'dfsg', 'fdg', 'aleksandar.trmcic@hotmail.com', 22, 'buyer'),
-(15, '1234', '$2y$10$lpmOzmNMjmvBmapvE/jkXOvplfLx0z8oadtdkPhIxly/B8ekj/tfi', 'sdfsdf', 'sdfsdfsdf', 'aleksandartrmcic@gmail.com', 44, 'buyer'),
-(16, 'marko123', '$2y$10$EKfXHlT8KaXodiRTaqmQmOZb917huTsHEGtRXnkJa1wSmTmuJa1dq', 'marko', 'markovic', 'marko123@gmail.com', 22, 'buyer'),
-(17, 'mike22', '$2y$10$uCXaQDrpHsYNV9fYFkGW9.pN4zHat9PUWMdDAk2r4w.FIb7m.ak4e', 'marko', 'markovic', 'testingtrmcic@gmail.com', 34, 'buyer');
+(4, 'aca', '$2y$10$vJjiUmLz4h8Slrwe9R6qt.TRGQGzLp0v.2U7LL6R0heKV4LP.eoDS', 'Aleksandar', 'Trmcic', 'aleksandar.trmcic@gmail.com', 32, 'worker'),
+(7, 'jake', '$2y$10$vJjiUmLz4h8Slrwe9R6qt.TRGQGzLp0v.2U7LL6R0heKV4LP.eoDS', 'John', 'Johnson', 'jake@gmail.com', 25, 'buyer'),
+(8, 'jane', '$2y$10$vJjiUmLz4h8Slrwe9R6qt.TRGQGzLp0v.2U7LL6R0heKV4LP.eoDS', 'Joane', 'Williams', 'jane@gmail.com', 33, 'buyer'),
+(12, 'mike', '$2y$10$vJjiUmLz4h8Slrwe9R6qt.TRGQGzLp0v.2U7LL6R0heKV4LP.eoDS', 'Mark', 'James', 'mike@gmail.com', 44, 'buyer'),
+(13, 'mon', '$2y$10$vJjiUmLz4h8Slrwe9R6qt.TRGQGzLp0v.2U7LL6R0heKV4LP.eoDS', 'Monica', 'Smith', 'a_trmcic@hotmail.com', 29, 'buyer'),
+(14, 'aco', '$2y$10$vJjiUmLz4h8Slrwe9R6qt.TRGQGzLp0v.2U7LL6R0heKV4LP.eoDS', 'dfsg', 'fdg', 'aleksandar.trmcic@hotmail.com', 22, 'buyer'),
+(15, '1234', '$2y$10$vJjiUmLz4h8Slrwe9R6qt.TRGQGzLp0v.2U7LL6R0heKV4LP.eoDS', 'sdfsdf', 'sdfsdfsdf', 'aleksandartrmcic@gmail.com', 44, 'buyer'),
+(16, 'marko123', '$2y$10$vJjiUmLz4h8Slrwe9R6qt.TRGQGzLp0v.2U7LL6R0heKV4LP.eoDS', 'marko', 'markovic', 'marko123@gmail.com', 22, 'buyer'),
+(17, 'mike22', '$2y$10$vJjiUmLz4h8Slrwe9R6qt.TRGQGzLp0v.2U7LL6R0heKV4LP.eoDS', 'marko', 'markovic', 'testinggtrmcic@gmail.com', 34, 'buyer'),
+(18, 'aco2', '$2y$10$vJjiUmLz4h8Slrwe9R6qt.TRGQGzLp0v.2U7LL6R0heKV4LP.eoDS', 'Aleksandar', 'Trmcic', 'aleksandar.trmcic2@gmail.com', 32, 'buyer'),
+(27, 'test', '$2y$10$gKehhBuWl8Ge08Z7OPKypeyc3IOgYzo0E5yTW9zVyH9bI3IGSfewy', 'test', 'test', 'test@gmail.com', 22, 'buyer');
 
 --
 -- Constraints for dumped tables
