@@ -49,4 +49,4 @@ composer install
 11. To use the REST API for orders, make requests to the appropriate endpoints using your preferred tool (e.g., cURL, Postman, Insomnia, etc.).
 
 ## Acknowledgments
-* This project uses the PHPMailer library.
+* This project uses the PHPMailer library. 
