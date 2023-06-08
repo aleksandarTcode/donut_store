@@ -12,5 +12,4 @@ defined("DB_PASS") ? null : define("DB_PASS","");
 defined("DB_NAME") ? null : define("DB_NAME", "sweethouse");
 
 
-
 ?>

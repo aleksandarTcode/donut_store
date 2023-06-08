@@ -162,7 +162,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label for="paymentMethod">Payment method</label>
                     <select class="form-control" name="paymentMethod" id="payment">
                         <option value="cache">Cache</option>
-                        <option value="card">Card</option>
+                        <option value="stripe">Stripe</option>
                     </select>
                 </div>
 
