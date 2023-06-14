@@ -4,7 +4,7 @@ if(!isset($_SESSION['username'])){
     header("Location: login.php");
 }
 
-unset($_SESSION['visits']);
+unset($_SESSION['visits']); //remove this after testing
 
 unset($_SESSION['checkout_session_id']);
 
@@ -32,7 +32,7 @@ else
     $order->new_order_form_stripe();
 }
 
-echo $_SESSION['checkout_session_id'];
+//echo $_SESSION['checkout_session_id'];
 
 //print_r($_SESSION);
 
@@ -75,7 +75,7 @@ echo $_SESSION['checkout_session_id'];
 
 
 
-        <a class="btn btn-primary btn-lg" id="btn" href="checkout.php" role="button">Checkout</a>
+        <a class="btn btn-primary btn-lg" href="#" id="btn" role="button">Checkout</a>
 
         <a href="logout.php" class="btn btn-outline-danger btn-lg" onclick="return confirm('Are you sure you want to log out?');">LogOut</a>
     </div>
@@ -95,8 +95,11 @@ echo $_SESSION['checkout_session_id'];
     $('#btn').on('click', function(e){
         e.preventDefault();
 
-        // console.log('hello from Stripe');
+        // alert('hello from Stripe');
         stripe.redirectToCheckout({sessionId: `<?= isset($_SESSION['checkout_session_id']) ? $_SESSION['checkout_session_id'] : null ?>`
         })
+    });
 
 </script>
+
+

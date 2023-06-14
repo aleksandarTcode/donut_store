@@ -124,8 +124,9 @@ class Order {
                     $line_items[] = ['price' => $stripe_product_price, 'quantity' => 1];
 
                     $session = $stripe->checkout->sessions->create([
-                        'success_url' => 'https://localhost/Udm/practice/etf/projects/sweethouse/checkout.php',
-                        'cancel_url' => 'https://localhost/Udm/practice/etf/projects/checkout.php',
+                        'success_url' => 'https://localhost/Udm/practice/etf/projects/sweethouse/success.php',
+                        'cancel_url' => 'https://localhost/Udm/practice/etf/projects/cancel.php',
+                        'payment_method_types' => ['card', 'alipay'],
                         'mode' => 'payment',
                         'line_items' => [$line_items],
                     ]);
@@ -146,7 +147,6 @@ class Order {
             echo "Error: ". $e->getMessage();
         }
     }
-
 
     public function get_all_orders(){
 
