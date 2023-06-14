@@ -124,7 +124,7 @@ class Order {
                     $line_items[] = ['price' => $stripe_product_price, 'quantity' => 1];
 
                     $session = $stripe->checkout->sessions->create([
-                        'success_url' => 'https://localhost/Udm/practice/etf/projects/sweethouse/success.php',
+                        'success_url' => 'http://donutstore.test/success.php?session_id={CHECKOUT_SESSION_ID}',
                         'cancel_url' => 'https://localhost/Udm/practice/etf/projects/cancel.php',
                         'payment_method_types' => ['card', 'alipay'],
                         'mode' => 'payment',
@@ -135,6 +135,7 @@ class Order {
 
 
                 }catch(Exception $e){
+//                    header("Location: logout.php");
                     echo $e->getMessage();
                 }
             }
