@@ -44,6 +44,40 @@ class Order {
             $stmt->bindParam(':payment_method', $this->paymentMethod);
             $stmt->bindParam(':price', $this->price);
 
+            if($_SESSION['paymentMethod']==='stripe'){
+                try {
+                    $stripe = new \Stripe\StripeClient($_ENV['STRIPE_SK_KEY']);
+
+                    $product = $stripe->products->create([
+                        'name' => $this->item,
+                    ]);
+
+
+                    $stripe_product_id = $product->id;
+
+                    $stripe_product_price = $stripe->prices->create([
+                        'unit_amount' => ($this->price)*100,
+                        'currency' => 'usd',
+                        'product' => $product->id,
+                    ]);
+
+                    $line_items[] = ['price' => $stripe_product_price, 'quantity' => 1];
+
+                    $session = $stripe->checkout->sessions->create([
+                        'success_url' => 'https://localhost/Udm/practice/etf/projects/sweethouse/confirm.php',
+                        'cancel_url' => 'https://localhost/Udm/practice/etf/projects/confirm.php',
+                        'mode' => 'payment',
+                        'line_items' => [$line_items],
+                    ]);
+
+                    $_SESSION['checkout_session_id'] = $session->id;
+
+
+                }catch(Exception $e){
+                    echo $e->getMessage();
+                }
+            }
+
             $stmt->execute();
 
 //            print_r(get_object_vars($this));
@@ -52,6 +86,67 @@ class Order {
             echo "Error: ". $e->getMessage();
         }
     }
+
+    public function new_order_form_stripe(){
+
+        //fill Order properties with SESSION values, exclude first one ($database)
+        foreach(array_slice(get_object_vars($this),1) as $prop=>$value){
+            if(array_key_exists($prop,$_SESSION)){
+                $this->$prop = $_SESSION[$prop];
+            }
+        }
+        try {
+            $stmt = $this->database->conn->prepare("INSERT INTO orders (idB,item,address,payment_method,price,status) VALUES (:idB,:item,:address,:payment_method,:price,'pending')");
+            $stmt->bindParam(':idB', $this->idB);
+            $stmt->bindParam(':item', $this->item);
+            $stmt->bindParam(':address', $this->address);
+            $stmt->bindParam(':payment_method', $this->paymentMethod);
+            $stmt->bindParam(':price', $this->price);
+
+
+            if($_SESSION['paymentMethod']==='stripe'){
+                try {
+                    $stripe = new \Stripe\StripeClient($_ENV['STRIPE_SK_KEY']);
+
+                    $product = $stripe->products->create([
+                        'name' => $this->item,
+                    ]);
+
+
+                    $stripe_product_id = $product->id;
+
+                    $stripe_product_price = $stripe->prices->create([
+                        'unit_amount' => ($this->price)*100,
+                        'currency' => 'usd',
+                        'product' => $product->id,
+                    ]);
+
+                    $line_items[] = ['price' => $stripe_product_price, 'quantity' => 1];
+
+                    $session = $stripe->checkout->sessions->create([
+                        'success_url' => 'https://localhost/Udm/practice/etf/projects/sweethouse/checkout.php',
+                        'cancel_url' => 'https://localhost/Udm/practice/etf/projects/checkout.php',
+                        'mode' => 'payment',
+                        'line_items' => [$line_items],
+                    ]);
+
+                    $_SESSION['checkout_session_id'] = $session->id;
+
+
+                }catch(Exception $e){
+                    echo $e->getMessage();
+                }
+            }
+
+            $stmt->execute();
+
+//            print_r(get_object_vars($this));
+
+        }catch (PDOException $e){
+            echo "Error: ". $e->getMessage();
+        }
+    }
+
 
     public function get_all_orders(){
 

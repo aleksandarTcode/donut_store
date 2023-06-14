@@ -30,8 +30,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
 
-    if($firstnameC && $lastnameC && $addressC && $zipC ==1){
-            header("Location: make_order.php");
+    if($firstnameC && $lastnameC && $addressC && $zipC ==1 && $_POST['paymentMethod'] === 'stripe'){
+        header("Location: make_order_stripe.php");
+    } elseif($firstnameC && $lastnameC && $addressC && $zipC ==1){
+        header ("Location: make_order.php");
     }
 
 

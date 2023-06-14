@@ -13,7 +13,11 @@ $address = $_SESSION['zip'].' '.$_SESSION['address'];
 $payment_method = $_SESSION['paymentMethod'];
 $price = $_SESSION['price'] = sumPrice();
 
+
+
+
 //print_r($_SESSION);
+
 
 ?>
 
@@ -51,19 +55,10 @@ $price = $_SESSION['price'] = sumPrice();
 
             <br>
 
-            <?php
-                if($_SESSION['paymentMethod']==='stripe')
-                {
-                    ?>
-                    <a class="btn btn-success btn-lg" href="stripe.php" role="button" id="btn">Buy Now</a>
-                <?php
-                }
-                else{
-                    ?>
-                    <a class="btn btn-success btn-lg" href="confirm.php" role="button">Confirm</a>
-                <?php
-                }
-            ?>
+
+
+            <a class="btn btn-primary btn-lg" href="confirm.php" role="button">Confirm</a>
+
             <a href="logout.php" class="btn btn-outline-danger btn-lg" onclick="return confirm('Are you sure you want to log out?');">LogOut</a>
         </div>
 
@@ -73,17 +68,5 @@ $price = $_SESSION['price'] = sumPrice();
     </div>
     <!-- ./container -->
 
-<?php require_once ('includes/footer.php');?>
+<?php require_once ('includes/footer.php'); ?>
 
-    <script src="https://js.stripe.com/v3"></script>
-    <script>
-        let stripe = Stripe('<?= $_ENV['STRIPE_PUB_KEY'] ?>');
-
-        $('#btn').on('click', function(e){
-            e.preventDefault();
-
-            console.log('hello from Stripe');
-            // stripe.redirectToCheckout({sessionId: null})
-        })
-
-</script>
