@@ -193,12 +193,12 @@ class Order {
             $add1 = $page + 1;
             $add2 = $page + 2;
 
-            if ($page == 1) {
+            if ($page == 1 && $lastPage > 1) {
                 $middleNumbers .= '<li class="page-item active"><a class="page-link">' . $page . '</a></li>';
 
                 $middleNumbers .= '<li class="page-item"><a class="page-link" href="' . $_SERVER['PHP_SELF'] . '?page=' . $add1 . '">' . $add1 . '</a></li>';
 
-            } elseif ($page == $lastPage) {
+            } elseif ($page == $lastPage && $lastPage > 1) {
 
                 $middleNumbers .= '<li class="page-item"><a class="page-link" href="' . $_SERVER['PHP_SELF'] . '?page=' . $sub1 . '">' . $sub1 . '</a></li>';
 
