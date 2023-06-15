@@ -6,8 +6,13 @@ if(!isset($_SESSION['username'])){
 
 if(isset($_GET['session_id'])){
 
-    unset($_SESSION['checkout_session_id']);
+//    var_dump($_SESSION);
 
+    $stripe_order = new Order($database);
+
+    $stripe_order->change_order_status('unprocessed and paid',$_SESSION['checkout_session_id'],'stripe_session_id');
+
+    unset($_SESSION['checkout_session_id']);
 
     try {
 

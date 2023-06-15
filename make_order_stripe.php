@@ -33,9 +33,7 @@ else
 }
 
 //echo $_SESSION['checkout_session_id'];
-
-//print_r($_SESSION);
-
+//var_dump($_SESSION);
 
 ?>
 

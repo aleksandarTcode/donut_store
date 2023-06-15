@@ -14,6 +14,7 @@ class Order {
     public $id;
 
 
+
     public function __set($name, $value)
     {
         $this->$name = $value;
@@ -87,24 +88,24 @@ class Order {
         }
     }
 
-    public function new_order_form_stripe(){
-
+    public function new_order_form_stripe() {
         //fill Order properties with SESSION values, exclude first one ($database)
-        foreach(array_slice(get_object_vars($this),1) as $prop=>$value){
-            if(array_key_exists($prop,$_SESSION)){
+        foreach (array_slice(get_object_vars($this),1) as $prop=>$value) {
+            if (array_key_exists($prop,$_SESSION)) {
                 $this->$prop = $_SESSION[$prop];
             }
         }
+
+
         try {
-            $stmt = $this->database->conn->prepare("INSERT INTO orders (idB,item,address,payment_method,price,status) VALUES (:idB,:item,:address,:payment_method,:price,'pending')");
+            $stmt = $this->database->conn->prepare("INSERT INTO orders (idB,item,address,payment_method,price,status,stripe_session_id) VALUES (:idB,:item,:address,:payment_method,:price,'pending',:stripe_session_id)");
             $stmt->bindParam(':idB', $this->idB);
             $stmt->bindParam(':item', $this->item);
             $stmt->bindParam(':address', $this->address);
             $stmt->bindParam(':payment_method', $this->paymentMethod);
             $stmt->bindParam(':price', $this->price);
 
-
-            if($_SESSION['paymentMethod']==='stripe'){
+            if ($_SESSION['paymentMethod'] === 'stripe') {
                 try {
                     $stripe = new \Stripe\StripeClient($_ENV['STRIPE_SK_KEY']);
 
@@ -112,11 +113,10 @@ class Order {
                         'name' => $this->item,
                     ]);
 
-
                     $stripe_product_id = $product->id;
 
                     $stripe_product_price = $stripe->prices->create([
-                        'unit_amount' => ($this->price)*100,
+                        'unit_amount' => ($this->price) * 100,
                         'currency' => 'usd',
                         'product' => $product->id,
                     ]);
@@ -131,21 +131,23 @@ class Order {
                         'line_items' => [$line_items],
                     ]);
 
-                    $_SESSION['checkout_session_id'] = $session->id;
+                    $stripe_session_id = $_SESSION['checkout_session_id'] = $session->id;
 
+                    // Update the database with the stripe_session_id
+                    $stmt->bindParam(':stripe_session_id', $stripe_session_id);
 
-                }catch(Exception $e){
-//                    header("Location: logout.php");
+                } catch (Exception $e) {
+                    // header("Location: logout.php");
                     echo $e->getMessage();
                 }
             }
 
             $stmt->execute();
 
-//            print_r(get_object_vars($this));
+            // print_r(get_object_vars($this));
 
-        }catch (PDOException $e){
-            echo "Error: ". $e->getMessage();
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
         }
     }
 
@@ -176,6 +178,7 @@ class Order {
         if($total_entries!==0) {
 
             $lastPage = ceil($total_entries / $perPage);
+
 
             // if someone is changing page in url manually
             if ($page < 1) {
@@ -278,16 +281,13 @@ class Order {
 
 
 
-
-
-
     }//end get_all_with_pagination()
 
-    public function change_order_status($status,$id){
+    public function change_order_status($status,$column_parameter,$column='id'){
 
         try{
-            $stmt = $this->database->conn->prepare("UPDATE orders SET status = ? WHERE id = ?");
-            $stmt->execute(array($status,$id));
+            $stmt = $this->database->conn->prepare("UPDATE orders SET status = ? WHERE $column = ?");
+            $stmt->execute(array($status,$column_parameter));
         }catch (PDOException $e){
             echo "Error: " . $e->getMessage();
         }
