@@ -1,6 +1,6 @@
 # Donut Store
 
-This is a small web application that allows logged-in users to buy donuts. Users can register by providing a valid email and a strong password. After registration, users receive a confirmation email. The project uses PHPMailer to send emails.
+This is a small web application that allows logged-in users to buy donuts. Users can register by providing a valid email and a strong password. After registration, users receive a confirmation email. The project uses PHPMailer to send emails and Stripe for payments.
 
 ## Features
 
@@ -12,6 +12,7 @@ This is a small web application that allows logged-in users to buy donuts. Users
 * The zip code for address must be from Belgrade (starts with 11 and has a maximum of 5 digits)
 * Users can preview their complete order with the calculated price before submitting it
 * Users with the role 'worker' can view and manage orders
+* Stripe API is available for payment
 * REST API for orders in the api folder:
   * GET requests to /orders/read.php return a list of all orders
   * GET requests to /orders/read_single.php return a single order with the specified ID
