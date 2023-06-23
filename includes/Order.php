@@ -124,8 +124,9 @@ class Order {
                     $line_items[] = ['price' => $stripe_product_price, 'quantity' => 1];
 
                     $session = $stripe->checkout->sessions->create([
-                        'success_url' => 'http://donutstore.test/success.php?session_id={CHECKOUT_SESSION_ID}',
-                        'cancel_url' => 'https://localhost/Udm/practice/etf/projects/cancel.php',
+
+                        'success_url'=> $_ENV['SUCCESS_DOMAIN'].'?session_id={CHECKOUT_SESSION_ID}',
+                        'cancel_url' => $_ENV['CANCEL_DOMAIN'],
                         'payment_method_types' => ['card', 'alipay'],
                         'mode' => 'payment',
                         'line_items' => [$line_items],

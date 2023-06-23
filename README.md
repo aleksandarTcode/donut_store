@@ -32,6 +32,14 @@ composer install
 ```
 3. Use the fresh_database/sweethouse.sql file to set up the database.
 4. All example users have the password 123456@Aa, and they have the role 'buyer' except for the user 'aca', who has the status 'worker'.
+5. Create .env file in 'includes' folder with your credentials for Stripe 
+```
+    STRIPE_PUB_KEY='stripe_pub_key'
+    STRIPE_SK_KEY='stripe_sk_key' 
+    SUCCESS_DOMAIN='success_domain'
+    CANCEL_DOMAIN='cancel_domain'
+```
+
 
 ## Usage 
 
