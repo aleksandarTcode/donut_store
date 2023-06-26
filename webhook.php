@@ -23,7 +23,7 @@ if($_SESSION['REQUEST_METHOD']==="POST") {
     $stripe = new \Stripe\StripeClient('sk_test_...');
 
     // This is your Stripe CLI webhook secret for testing your endpoint locally.
-    $endpoint_secret = 'whsec_c6a50ff48ff2149d2cb10568fbab7d9b895bf7fb1e3f364da047c98bcee37eab';
+    $endpoint_secret = $_ENV['ENDPOINT_SECRET'];
 
     $payload = @file_get_contents('php://input');
     $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
@@ -46,17 +46,41 @@ if($_SESSION['REQUEST_METHOD']==="POST") {
     // Handle the event
     switch ($event->type) {
         case 'payment_intent.succeeded':
-            $paymentIntent = $event->data->object;
+//            $paymentIntent = $event->data->object;
         // ... handle other event types
         break;
 
 
         case 'charge.succeeded':
 
-            ob_flush();
-            ob_start();
-            var_dump($event->data);
-            file_put_contents('event.txt', ob_get_flush());
+            $order_amount = $event->data->object->amount;
+            $order_currency = $event->data->object->currency;
+            $order_transaction = $event->data->object->balance_transaction;
+            $order_status = $event->data->object->status;
+            $event_stripe_session_id= $event->id;
+
+
+            try {
+
+                $stmt = $database->conn->prepare("INSERT INTO orders(order_amount,order_currency,order_transaction,order_status,event_stripe_session_id) VALUES(:order_amount,:order_currency,:order_transaction,:order_status,:event_stripe_session_id)");
+
+                $stmt->bindParam(':order_amount', $order_amount);
+                $stmt->bindParam(':order_currency', $order_currency);
+                $stmt->bindParam(':order_transaction', $order_transaction);
+                $stmt->bindParam(':order_status', $order_status);
+                $stmt->bindParam(':event_stripe_session_id', $event_stripe_session_id);
+
+                $stmt->execute();
+
+            }catch (Exception $e) {
+                echo $e->getMessage();
+            }
+
+
+//            ob_flush();
+//            ob_start();
+//            var_dump($event->data);
+//            file_put_contents('event.txt', ob_get_flush());
 
             break;
 
