@@ -11,19 +11,10 @@ class Order {
     public $price;
     public $name;
     public $status;
+    public $date;
     public $id;
 
 
-
-    public function __set($name, $value)
-    {
-        $this->$name = $value;
-    }
-
-    public function __get($name)
-    {
-        return $this->$name;
-    }
 
     public function __construct($data_base){
         $this->database = $data_base;
@@ -314,9 +305,14 @@ class Order {
 
         $row = $stmt->fetch(PDO::FETCH_OBJ);
 
+        if($row === false){
+            echo(json_encode(['message'=>'Invalid order ID']));
+            return;
+        }
+
         $this->item = $row->item;
         $this->address = $row->address;
-        $this->payment_method = $row->payment_method;
+        $this->paymentMethod = $row->payment_method;
         $this->status = $row->status;
         $this->price = $row->price;
         $this->date = $row->date;
