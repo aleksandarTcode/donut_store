@@ -8,7 +8,6 @@ unset($_SESSION['visits']); //remove this after testing
 
 unset($_SESSION['checkout_session_id']);
 
-//unset($_SESSION["'checkout_session_id'"]);
 
 $item = $_SESSION['item'] = $_SESSION['size'].' with '.printAllExtras();
 $buyer = $_SESSION['firstname'].' '.$_SESSION['lastname'];
